@@ -1,4 +1,6 @@
-﻿namespace bsc_sc_rpn
+﻿using System;
+
+namespace bsc_sc_rpn
 {
     public class PolishNotationCalculator
     {
@@ -33,6 +35,8 @@
                         result = a * b;
                     else if (token == "/")
                         result = a / b;
+                    else 
+                        throw new InvalidOperationException($"Unsupported operator: {token}");
 
                     stack.Push(result);
                 }
