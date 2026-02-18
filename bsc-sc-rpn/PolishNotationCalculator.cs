@@ -13,6 +13,30 @@
 
         public double Evaluate(string expression)
         {
+            string[] tokens = expression.Split(' ');
+
+            foreach (string token in tokens)
+            {
+                if (double.TryParse(token, out double value)) { stack.Push(value); }
+
+                else
+                {
+                    double b = stack.Pop();
+                    double a = stack.Pop();
+                    double result;
+
+                    if (token == "+")
+                        result = a + b;
+                    else if (token == "-")
+                        result = a - b;
+                    else if (token == "*")
+                        result = a * b;
+                    else if (token == "/")
+                        result = a / b;
+
+                    stack.Push(result);
+                }
+            }
 
             /*
              * 1. Split the expression into individual tokens using a space as the delimiter.
