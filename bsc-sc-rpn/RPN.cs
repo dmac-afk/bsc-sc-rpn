@@ -18,11 +18,31 @@ namespace bsc_sc_rpn
         public RPN()
         {
             InitializeComponent();
+
+            stack = new ArrayStack<double>(100); // Initialize stack with a capacity of 100
+            calculator = new PolishNotationCalculator(stack); // Create calculator instance with the stack
         }
 
         private void Btn_Eval_Click(object sender, EventArgs e)
         {
-            // Read and Parse Expression here... 
+            string expression = Txt_Input.Text.Trim();
+
+            if (string.IsNullOrEmpty(expression))
+            {
+                MessageBox.Show("Please enter a valid expression.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                double result = calculator.Evaluate(expression);
+                Lbl_Output.Text = $"Result: {result}";
+            }
+            catch (Exception ex)
+            {
+                Lbl_Output.Text = "Error: " + ex.Message;
+            }
+          
         }
     }
 }
