@@ -19,7 +19,7 @@ namespace bsc_sc_rpn
         {
             InitializeComponent();
 
-            stack = new ArrayStack<double>(100); // Initialize stack with a capacity of 100
+            stack = new ArrayStack<double>(24); // Initialize stack
             calculator = new PolishNotationCalculator(stack); // Create calculator instance with the stack
         }
 
