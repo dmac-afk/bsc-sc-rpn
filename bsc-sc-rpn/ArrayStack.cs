@@ -10,7 +10,7 @@
         {
             _capacity = capacity;
             _items = new T[_capacity];
-            _top = -1; // -1 means the stack is empty
+            _top = -1; // start with an empty stack represented by -1
         }
 
         // Pushes an item onto the top of the stack.

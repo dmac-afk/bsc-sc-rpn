@@ -42,7 +42,6 @@ namespace bsc_sc_rpn
             {
                 Lbl_Output.Text = "Error: " + ex.Message;
             }
-          
         }
     }
 }
