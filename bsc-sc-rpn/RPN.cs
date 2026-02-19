@@ -18,30 +18,29 @@ namespace bsc_sc_rpn
         public RPN()
         {
             InitializeComponent();
-
-            stack = new ArrayStack<double>(24); // Initialize stack
-            calculator = new PolishNotationCalculator(stack); // Create calculator instance with the stack
         }
 
         private void Btn_Eval_Click(object sender, EventArgs e)
         {
-            string expression = Txt_Input.Text.Trim();
-
-            if (string.IsNullOrEmpty(expression))
-            {
-                MessageBox.Show("Please enter a valid expression.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             try
             {
-                double result = calculator.Evaluate(expression);
+                IStack<double> newStack = new ArrayStack<double>(24); // Create a new stack for each evaluation
+                PolishNotationCalculator newCalculator = new PolishNotationCalculator(newStack); // Create a new calculator instance with the new stack
+
+                double result = newCalculator.Evaluate(Txt_Input.Text.Trim());
                 Lbl_Output.Text = $"Result: {result}";
             }
-            catch (Exception ex)
-            {
-                Lbl_Output.Text = "Error: " + ex.Message;
-            }
+
+            catch (DivideByZeroException ex) { ShowError(ex.Message); }
+
+            catch (InvalidOperationException ex) { ShowError(ex.Message); }
+
+            catch (ArgumentException ex) { ShowError(ex.Message); }
+        }
+
+        private void ShowError(string message)
+        {
+            Lbl_Output.Text = "Error: " + message;
         }
     }
 }

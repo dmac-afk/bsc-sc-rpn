@@ -13,17 +13,26 @@ namespace bsc_sc_rpn
 
         public double Evaluate(string expression)
         {
-            string[] tokens = expression.Split(' ');
+            if (string.IsNullOrWhiteSpace(expression))
+                throw new ArgumentException("Expression cannot be null or empty.");
+
+            string[] tokens = expression.Split(' '); // split string into array on spaces
 
             foreach (string token in tokens)
             {
+                if(string.IsNullOrWhiteSpace(token))
+                    continue;
+
                 if (double.TryParse(token, out double value)) { stack.Push(value); }
 
                 else
                 {
+                    if (token != "+" && token != "-" && token != "*" && token != "/")
+                        throw new InvalidOperationException($"Invalid token: {token}");
+
                     double b = stack.Pop();
                     double a = stack.Pop();
-                    double result;
+                    double result = 0;
 
                     if (token == "+")
                         result = a + b;
@@ -32,10 +41,11 @@ namespace bsc_sc_rpn
                     else if (token == "*")
                         result = a * b;
                     else if (token == "/")
+                    { 
+                        if (b == 0)
+                            throw new DivideByZeroException("Cannot divide by zero.");
                         result = a / b;
-                    else 
-                        throw new InvalidOperationException($"Unsupported operator: {token}");
-
+                    }
                     stack.Push(result);
                 }
             }
