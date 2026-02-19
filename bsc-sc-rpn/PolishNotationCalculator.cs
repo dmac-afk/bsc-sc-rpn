@@ -34,17 +34,22 @@ namespace bsc_sc_rpn
                     double a = stack.Pop();
                     double result = 0;
 
-                    if (token == "+")
-                        result = a + b;
-                    else if (token == "-")
-                        result = a - b;
-                    else if (token == "*")
-                        result = a * b;
-                    else if (token == "/")
-                    { 
-                        if (b == 0)
-                            throw new DivideByZeroException("Cannot divide by zero.");
-                        result = a / b;
+                    switch (token)
+                    {
+                        case "+":
+                            result = a + b;
+                            break;
+                        case "-":
+                            result = a - b;
+                            break;
+                        case "*":
+                            result = a * b;
+                            break;
+                        case "/":   
+                            if (b == 0)
+                                throw new DivideByZeroException("Cannot divide by zero.");
+                            result = a / b;
+                            break;
                     }
                     stack.Push(result);
                 }
