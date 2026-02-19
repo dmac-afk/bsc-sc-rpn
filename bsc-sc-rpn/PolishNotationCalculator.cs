@@ -20,14 +20,14 @@ namespace bsc_sc_rpn
 
             foreach (string token in tokens)
             {
-                if(string.IsNullOrWhiteSpace(token))
+                if(string.IsNullOrWhiteSpace(token)) // skip empty tokens
                     continue;
 
-                if (double.TryParse(token, out double value)) { stack.Push(value); }
+                if (double.TryParse(token, out double value)) { stack.Push(value); } // add numbers to the stack
 
                 else
                 {
-                    if (token != "+" && token != "-" && token != "*" && token != "/")
+                    if (token != "+" && token != "-" && token != "*" && token != "/") // validate operator
                         throw new InvalidOperationException($"Invalid token: {token}");
 
                     double b = stack.Pop();
